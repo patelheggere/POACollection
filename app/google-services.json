@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "755172948574",
+    "firebase_url": "https://poa-collection.firebaseio.com",
+    "project_id": "poa-collection",
+    "storage_bucket": "poa-collection.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755172948574:android:1cfb10bbc7c9b65e",
+        "android_client_info": {
+          "package_name": "com.patelheggere.poacollection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755172948574-98ehu3evrs956vomhbnpmulb3iolopsv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.patelheggere.poacollection",
+            "certificate_hash": "bb731cbd6d502ac2ee20d70f6eefeb2f6bc2c01a"
+          }
+        },
+        {
+          "client_id": "755172948574-70iqphju7dnscv0558jn7ishf1o3kdr6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnpNjsWmhw1-0-mbHW13m7xIzBIftlD88"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755172948574-70iqphju7dnscv0558jn7ishf1o3kdr6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

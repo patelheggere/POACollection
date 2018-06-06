@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">Pradeep POA Collector</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDB37y9E0562FMHknImvSmrPLpdx0yrAtU</string>
+    <string name="et_houseno">Enter Place Name</string>
+    <string name="et_housename">Enter House Name</string>
+    <string name="et_streetname">Enter Street Name</string>
+    <string name="et_locality">Enter Locality</string>
+    <string name="et_subl1">Enter Sub Locality1</string>
+    <string name="et_subl2">Enter Sub Locality2</string>
+    <string name="et_subl3">Enter Sub Locality3</string>
+    <string name="et_pin">Enter PIN Code</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="hint_phone_number">Enter Phone Number</string>
+    <string name="hint_verification_code">Verification Code</string>
+    <string name="start_phone_auth">Send OTP</string>
+    <string name="verify_phone_auth">Verify OTP</string>
+    <string name="resend_phone_auth">Resend OTP</string>
+    <string-array name="array_cat">
+        <item>Select Category</item>
+        <item>Bus Station</item>
+        <item>ATM</item>
+        <item>Marina</item>
+        <item>Business Facility</item>
+        <item>Grocery Store</item>
+        <item>Auto Dealership Used Cars</item>
+        <item>Petrol/Gasoline Station</item>
+        <item>Motorcycle Dealership</item>
+        <item>Restaurant</item>
+        <item>Historical Monument</item>
+        <item>Bank</item>
+        <item>Shopping</item>
+        <item>Hotel</item>
+        <item>Other Accommodation</item>
+        <item>Tourist Information</item>
+        <item>Rental Car Agency</item>
+        <item>Parking Lot</item>
+        <item>Auto Service &amp; Maintenance</item>
+        <item>Cinema</item>
+        <item>Performing Arts</item>
+        <item>Bowling Centre</item>
+        <item>Sports Complex</item>
+        <item>Park/Recreation Area</item>
+        <item>Convention/Exhibition Centre</item>
+        <item>Golf Course</item>
+        <item>Civic/Community Centre</item>
+        <item>Amusement Park</item>
+        <item>Sports Centre</item>
+        <item>Ice Skating Rink</item>
+        <item>Tourist Attraction</item>
+        <item>Hospital</item>
+        <item>Higher Education</item>
+        <item>School</item>
+        <item>Library</item>
+        <item>Museum</item>
+        <item>City Hall</item>
+        <item>Police Station</item>
+        <item>Government Office</item>
+        <item>Post Office</item>
+        <item>Bar Or Pub</item>
+        <item>Convenience Store</item>
+        <item>Clothing Store</item>
+        <item>Home Specialty Store</item>
+        <item>Pharmacy</item>
+        <item>Specialty Store</item>
+        <item>Sporting Goods Store</item>
+        <item>Medical Service</item>
+        <item>Residential Area/Building</item>
+        <item>Cemetery</item>
+        <item>Transportation Service</item>
+        <item>Repair Services</item>
+        <item>Training Centre/Institute</item>
+        <item>Toll Booth</item>
+        <item>Animal Park</item>
+        <item>Truck Dealership</item>
+        <item>Named Intersection</item>
+        <item>Home Improvement And Hardware Store</item>
+        <item>Consumer Electronics Store</item>
+        <item>Office Supply &amp; Services Store</item>
+        <item>Taxi Stand</item>
+        <item>Industrial Zone</item>
+        <item>Place Of Worship</item>
+        <item>Book Store</item>
+        <item>Coffee Shop</item>
+    </string-array>
+</resources>
