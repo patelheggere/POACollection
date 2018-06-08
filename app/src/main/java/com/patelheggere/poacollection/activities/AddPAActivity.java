@@ -53,7 +53,7 @@ public class AddPAActivity extends AppCompatActivity {
         etPlaceName = findViewById(R.id.placename);
         Category = findViewById(R.id.category);
         Address = findViewById(R.id.address);
-        Phone = findViewById(R.id.phone);
+        Phone = findViewById(R.id.etBrand);
         Email = findViewById(R.id.etEmail);
         website = findViewById(R.id.etWebsite);
         comment = findViewById(R.id.etComment);

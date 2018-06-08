@@ -8,6 +8,14 @@ public class PAModel {
     private String mPlaceName;
     private String mAddress;
     private String mCat;
+    private String mSubCat;
+    private String mBuildingName;
+    private String mBuildingNumber;
+    private String mNoFloor;
+    private String mBrand;
+    private String mLandMark;
+    private String mStreet;
+    private String mLocality;
     private String mPhone;
     private String mEmail;
     private String website;
@@ -124,5 +132,69 @@ public class PAModel {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getmSubCat() {
+        return mSubCat;
+    }
+
+    public void setmSubCat(String mSubCat) {
+        this.mSubCat = mSubCat;
+    }
+
+    public String getmBuildingName() {
+        return mBuildingName;
+    }
+
+    public void setmBuildingName(String mBuildingName) {
+        this.mBuildingName = mBuildingName;
+    }
+
+    public String getmBuildingNumber() {
+        return mBuildingNumber;
+    }
+
+    public void setmBuildingNumber(String mBuildingNumber) {
+        this.mBuildingNumber = mBuildingNumber;
+    }
+
+    public String getmNoFloor() {
+        return mNoFloor;
+    }
+
+    public void setmNoFloor(String mNoFloor) {
+        this.mNoFloor = mNoFloor;
+    }
+
+    public String getmBrand() {
+        return mBrand;
+    }
+
+    public void setmBrand(String mBrand) {
+        this.mBrand = mBrand;
+    }
+
+    public String getmLandMark() {
+        return mLandMark;
+    }
+
+    public void setmLandMark(String mLandMark) {
+        this.mLandMark = mLandMark;
+    }
+
+    public String getmStreet() {
+        return mStreet;
+    }
+
+    public void setmStreet(String mStreet) {
+        this.mStreet = mStreet;
+    }
+
+    public String getmLocality() {
+        return mLocality;
+    }
+
+    public void setmLocality(String mLocality) {
+        this.mLocality = mLocality;
     }
 }

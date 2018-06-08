@@ -93,7 +93,7 @@ public class MapLocationActivity extends AppCompatActivity
 
         mapFrag =  (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
-        startService(new Intent(MapLocationActivity.this, LocationService.class));
+        //startService(new Intent(MapLocationActivity.this, LocationService.class));
     }
 
     private void initialiseaddbtn()
