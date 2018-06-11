@@ -2,6 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 <android.support.constraint.ConstraintLayout
@@ -11,6 +12,18 @@
     android:id="@+id/poplyt"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvPOINumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="POI NUMBER"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvName"
@@ -23,7 +36,7 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPOINumber" />
 
     <android.support.constraint.Guideline
         android:layout_width="2dp"
@@ -32,18 +45,60 @@
         android:id="@+id/gd1"
         app:layout_constraintGuide_begin="115dp" />
     <EditText
-        android:id="@+id/placename"
+        android:id="@+id/et_poi_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:inputType="text"
-        android:hint="@string/et_houseno"
+        android:hint="POI Number"
         android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/gd1"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/placename"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:hint="@string/et_houseno"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gd1"
+        app:layout_constraintTop_toBottomOf="@+id/et_poi_number" />
+
+    <TextView
+        android:id="@+id/tvBName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:text="Building Name:"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+    <EditText
+        android:id="@+id/etBName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:hint="Enter Building NAme"
+        android:inputType="textCapWords"
+        android:imeOptions="actionNext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gd1"
+        app:layout_constraintTop_toBottomOf="@+id/placename" />
 
     <TextView
         android:id="@+id/tvBuildingNumber"
@@ -54,24 +109,52 @@
         android:text="Building Number:"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvBName" />
 
     <EditText
-        android:id="@+id/address"
+        android:id="@+id/etBNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:hint="Enter Number"
+        android:hint="Building Number"
         android:inputType="textCapWords"
         android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/gd1"
-        app:layout_constraintTop_toBottomOf="@+id/placename" />
+        app:layout_constraintTop_toBottomOf="@+id/etBName" />
+
+    <TextView
+        android:id="@+id/tv_no_floor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="40dp"
+        android:text="No of Floor:"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBuildingNumber" />
+
+    <EditText
+        android:id="@+id/et_no_floor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:hint="Number of Floor"
+        android:inputType="textCapWords"
+        android:imeOptions="actionNext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gd1"
+        app:layout_constraintTop_toBottomOf="@+id/etBNumber" />
 
     <TextView
         android:id="@+id/tvStreetName"
@@ -84,7 +167,7 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvBuildingNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_no_floor" />
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/category"
@@ -99,7 +182,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gd1"
-        app:layout_constraintTop_toBottomOf="@+id/address" />
+        app:layout_constraintTop_toBottomOf="@+id/et_no_floor" />
     <TextView
         android:id="@+id/tv_sub_cat"
         android:layout_width="0dp"
@@ -119,10 +202,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:hint="@string/et_streetname"
-        android:inputType="textCapWords"
         android:imeOptions="actionNext"
+        android:inputType="textCapWords"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gd1"
@@ -145,10 +228,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:hint="Enter etLocality Number"
-        android:inputType="textCapWords"
+        android:layout_marginTop="32dp"
+        android:hint="Enter Locality"
         android:imeOptions="actionNext"
+        android:inputType="textCapWords"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gd1"
@@ -180,26 +263,26 @@
         app:layout_constraintTop_toBottomOf="@+id/etLocality" />
 
     <TextView
-        android:id="@+id/tvSubLocality1"
+        android:id="@+id/tv_land_mark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="42dp"
-        android:text="Email :"
+        android:text="Land Mark :"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBrand" />
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/et_land"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:hint="Enter Email"
+        android:hint="Land MArk"
         android:inputType="textCapWords"
         android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
@@ -207,33 +290,33 @@
         app:layout_constraintTop_toBottomOf="@+id/etBrand" />
 
     <TextView
-        android:id="@+id/tvSubLocality2"
+        android:id="@+id/tv_street"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="43dp"
-        android:text="Website :"
+        android:text="Street :"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubLocality1" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_land_mark" />
 
     <EditText
-        android:id="@+id/etWebsite"
+        android:id="@+id/et_street"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:hint="Website"
+        android:hint="Street"
         android:inputType="textCapWords"
         android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/gd1"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/et_land" />
 
 
     <TextView
-        android:id="@+id/tvSubLocality3"
+        android:id="@+id/tv_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -241,7 +324,7 @@
         android:text="Comment:"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubLocality2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_street" />
 
     <EditText
         android:id="@+id/etComment"
@@ -255,7 +338,7 @@
         android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/gd1"
-        app:layout_constraintTop_toBottomOf="@+id/etWebsite" />
+        app:layout_constraintTop_toBottomOf="@+id/et_street" />
 
     <TextView
         android:id="@+id/tvPIN"
@@ -266,7 +349,7 @@
         android:text="PIN Code:"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubLocality3" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_comment" />
 
     <EditText
         android:id="@+id/etPIN"

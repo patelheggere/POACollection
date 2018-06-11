@@ -82,4 +82,72 @@
         <item>Book Store</item>
         <item>Coffee Shop</item>
     </string-array>
+
+    <string-array name="array_sub_cat">
+        <item>Select SubCategory</item>
+        <item>Bus Station</item>
+        <item>ATM</item>
+        <item>Marina</item>
+        <item>Business Facility</item>
+        <item>Grocery Store</item>
+        <item>Auto Dealership Used Cars</item>
+        <item>Petrol/Gasoline Station</item>
+        <item>Motorcycle Dealership</item>
+        <item>Restaurant</item>
+        <item>Historical Monument</item>
+        <item>Bank</item>
+        <item>Shopping</item>
+        <item>Hotel</item>
+        <item>Other Accommodation</item>
+        <item>Tourist Information</item>
+        <item>Rental Car Agency</item>
+        <item>Parking Lot</item>
+        <item>Auto Service &amp; Maintenance</item>
+        <item>Cinema</item>
+        <item>Performing Arts</item>
+        <item>Bowling Centre</item>
+        <item>Sports Complex</item>
+        <item>Park/Recreation Area</item>
+        <item>Convention/Exhibition Centre</item>
+        <item>Golf Course</item>
+        <item>Civic/Community Centre</item>
+        <item>Amusement Park</item>
+        <item>Sports Centre</item>
+        <item>Ice Skating Rink</item>
+        <item>Tourist Attraction</item>
+        <item>Hospital</item>
+        <item>Higher Education</item>
+        <item>School</item>
+        <item>Library</item>
+        <item>Museum</item>
+        <item>City Hall</item>
+        <item>Police Station</item>
+        <item>Government Office</item>
+        <item>Post Office</item>
+        <item>Bar Or Pub</item>
+        <item>Convenience Store</item>
+        <item>Clothing Store</item>
+        <item>Home Specialty Store</item>
+        <item>Pharmacy</item>
+        <item>Specialty Store</item>
+        <item>Sporting Goods Store</item>
+        <item>Medical Service</item>
+        <item>Residential Area/Building</item>
+        <item>Cemetery</item>
+        <item>Transportation Service</item>
+        <item>Repair Services</item>
+        <item>Training Centre/Institute</item>
+        <item>Toll Booth</item>
+        <item>Animal Park</item>
+        <item>Truck Dealership</item>
+        <item>Named Intersection</item>
+        <item>Home Improvement And Hardware Store</item>
+        <item>Consumer Electronics Store</item>
+        <item>Office Supply &amp; Services Store</item>
+        <item>Taxi Stand</item>
+        <item>Industrial Zone</item>
+        <item>Place Of Worship</item>
+        <item>Book Store</item>
+        <item>Coffee Shop</item>
+    </string-array>
 </resources>

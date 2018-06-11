@@ -74,6 +74,7 @@ public class MapLocationActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private Button uploadBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -83,6 +84,7 @@ public class MapLocationActivity extends AppCompatActivity
         mName = getIntent().getStringExtra("Name");
         mMoobile = getIntent().getStringExtra("mobile");
         mUid = getIntent().getStringExtra("uid");
+        uploadBtn = findViewById(R.id.btnUploadPOI);
         LayoutInflater layoutInflater = (LayoutInflater) MapLocationActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
         customView = layoutInflater.inflate(R.layout.popupwindowfor_pa, (ViewGroup) findViewById(R.id.poplyt));
         initialiseaddbtn();
@@ -90,9 +92,16 @@ public class MapLocationActivity extends AppCompatActivity
         cancelbtn();
         submitbtn();
         getSupportActionBar().setTitle("My Location");
-
         mapFrag =  (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
+
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MapLocationActivity.this, UpLoadActivity.class));
+            }
+        });
+
         //startService(new Intent(MapLocationActivity.this, LocationService.class));
     }
 
