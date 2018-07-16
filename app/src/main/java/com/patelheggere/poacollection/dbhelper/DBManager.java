@@ -30,7 +30,6 @@ public class DBManager {
     }
 
     public void insert(POIDetails object) {
-        System.out.println("LATTT:"+object.getmLattitude());
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.NAME, object.getName());
         contentValue.put(DatabaseHelper.CATEGORY, object.getCategory());
@@ -49,6 +48,7 @@ public class DBManager {
         contentValue.put(DatabaseHelper.LON, object.getmLonggitude());
         contentValue.put(DatabaseHelper.PERSON_NAME, object.getmPersonName());
         contentValue.put(DatabaseHelper.PHONE, object.getmPhoneNumberr());
+        contentValue.put(DatabaseHelper.DATE, object.getmDate());
         System.out.println("Inserted:"+database.insert(DatabaseHelper.TABLE_NAME, null, contentValue));
     }
 

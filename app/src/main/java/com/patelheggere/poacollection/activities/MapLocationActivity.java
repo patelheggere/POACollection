@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -42,8 +43,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.patelheggere.poacollection.dbhelper.DBManager;
+import com.patelheggere.poacollection.dbhelper.DatabaseHelper;
 import com.patelheggere.poacollection.models.LocationTrack;
 import com.patelheggere.poacollection.models.PAModel;
+import com.patelheggere.poacollection.models.POIDetails;
 import com.patelheggere.poacollection.services.LocationService;
 import com.patelheggere.poacollection.R;
 
@@ -76,6 +80,9 @@ public class MapLocationActivity extends AppCompatActivity
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private Button uploadBtn;
 
+    private DBManager dbManager;
+    private Cursor mCursor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -91,6 +98,9 @@ public class MapLocationActivity extends AppCompatActivity
         signOut();
         cancelbtn();
         submitbtn();
+        dbManager = new DBManager(MapLocationActivity.this);
+        dbManager.open();
+
         getSupportActionBar().setTitle("My Location");
         mapFrag =  (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
@@ -102,7 +112,14 @@ public class MapLocationActivity extends AppCompatActivity
             }
         });
 
+        LoadPOACollections();
         //startService(new Intent(MapLocationActivity.this, LocationService.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoadPOACollections();
     }
 
     private void initialiseaddbtn()
@@ -217,10 +234,38 @@ public class MapLocationActivity extends AppCompatActivity
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
-        LoadPOACollections();
+
     }
 
-    private void LoadPOACollections() {
+    private void LoadPOACollections()
+    {
+        mCursor = dbManager.fetch();
+        POIDetails ob = new POIDetails();
+        if(mCursor.getCount()>0) {
+            if (mCursor.moveToFirst()) {
+                do {
+                    try {
+                        LatLng latLng = new LatLng(Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LAT))), Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LON))));
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(latLng);
+                        if (mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.BUILD_NAME)) != null)
+                            markerOptions.title(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.BUILD_NAME)));
+                        else
+                            markerOptions.title("No Name");
+                        markerOptions.snippet(markerOptions.getPosition().toString());
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        markerOptions.draggable(false);
+                        mGoogleMap.addMarker(markerOptions);
+                    }catch (Exception e)
+                    {
+                        //LoadPOACollections();
+                    }
+                } while (mCursor.moveToNext());
+
+            }
+        }
+
+        /*
         mDatabaseReference = firebaseDatabase.getReference().child("POACollections");
         mDatabaseReference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -280,6 +325,10 @@ public class MapLocationActivity extends AppCompatActivity
 
             }
         });
+        */
+
+
+
     }
 
     @Override

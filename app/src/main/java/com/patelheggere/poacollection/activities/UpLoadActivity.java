@@ -75,6 +75,7 @@ public class UpLoadActivity extends AppCompatActivity {
                         ob.setComment(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.COMMENT)));
                         ob.setmLattitude(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LAT)));
                         ob.setmLonggitude(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LON)));
+                        ob.setmDate(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.DATE)));
                         mDBRef.push().setValue(ob);
                         dbManager.delete(mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper._ID)));
                         nofItems = nofItems-1;

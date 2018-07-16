@@ -17,13 +17,14 @@ public class POIDetails {
     String mPOINumber;
     String mPhoneNumberr;
     String mPersonName;
+    String mDate;
 
     public POIDetails()
     {
 
     }
 
-    public POIDetails(String mPhoneNumberr, String mPersonName, String name, String category, String subCat, String bName, String bNumber, String noFloor, String brand, String landMark, String street, String locality, String pincode, String comment, String mLattitude, String mLonggitude, String mPOINumber) {
+    public POIDetails(String mPhoneNumberr, String mDate,String mPersonName, String name, String category, String subCat, String bName, String bNumber, String noFloor, String brand, String landMark, String street, String locality, String pincode, String comment, String mLattitude, String mLonggitude, String mPOINumber) {
         this.mPhoneNumberr = mPhoneNumberr;
         this.mPersonName = mPersonName;
         this.name = name;
@@ -41,6 +42,15 @@ public class POIDetails {
         this.mLattitude = mLattitude;
         this.mLonggitude = mLonggitude;
         this.mPOINumber = mPOINumber;
+        this.mDate = mDate;
+    }
+
+    public String getmDate() {
+        return mDate;
+    }
+
+    public void setmDate(String mDate) {
+        this.mDate = mDate;
     }
 
     public String getmPhoneNumberr() {

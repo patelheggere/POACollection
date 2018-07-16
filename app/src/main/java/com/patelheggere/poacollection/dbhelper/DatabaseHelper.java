@@ -27,8 +27,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LON = "lon";
     public static final String PHONE = "phone";
     public static final String PERSON_NAME = "person_name";
+    public static final String DATE = "date";
     // Database Information
-    static final String DB_NAME = "POI2.DB";
+    static final String DB_NAME = "POI3.DB";
 
     // database version
     static final int DB_VERSION = 1;
@@ -37,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " TEXT , " + CATEGORY + " TEXT , "+ SUB_CAT +" TEXT ,"
             +BUILD_NAME +" TEXT , "+BUILD_NUMBER+" TEXT ,"+NO_OF_FLOOR+" TEXT , "+BRAND+" TEXT , "+LAND_MARK+" TEXT, "
-            +STREET+" TEXT , "+LOCALITY+" TEXT , "+PINCODE+" TEXT , "+COMMENT+" TEXT ,"+POI_NUMBER+" TEXT ,"+LAT+" TEXT , "+LON+" TEXT ,"+PHONE+" TEXT ,"+PERSON_NAME+" TEXT );";
+            +STREET+" TEXT , "+LOCALITY+" TEXT , "+PINCODE+" TEXT , "+COMMENT+" TEXT ,"+POI_NUMBER+" TEXT ,"+LAT+" TEXT , "+LON+" TEXT ,"+PHONE+" TEXT ,"+PERSON_NAME+" TEXT ,"+DATE+" );";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
