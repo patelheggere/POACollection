@@ -1964,7 +1964,6 @@ public class AddPAActivity extends AppCompatActivity {
         Ob72.setSubCat(subList72);
         categoryModelList.add(Ob72);
 
-
     }
 
     private void uploadData()
