@@ -155,7 +155,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/gd1"
         app:layout_constraintTop_toBottomOf="@+id/etBNumber" />
-
     <TextView
         android:id="@+id/tvStreetName"
         android:layout_width="0dp"
@@ -169,16 +168,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_no_floor" />
 
-    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+    <TextView
         android:id="@+id/category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:hint="@string/et_streetname"
-        android:inputType="textCapWords"
-        android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gd1"
