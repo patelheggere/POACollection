@@ -15,6 +15,7 @@
     <string name="start_phone_auth">Send OTP</string>
     <string name="verify_phone_auth">Verify OTP</string>
     <string name="resend_phone_auth">Resend OTP</string>
+    <string name="enable_disable">Enable/Disable Tracking</string>
     <string-array name="array_cat">
         <item>Select Category</item>
         <item>Bus Station</item>

@@ -30,20 +30,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MapLocationActivity"></activity>
+        <activity
+            android:name=".activities.MapLocationActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activities.AddPAActivity" />
+        <activity android:name=".activities.AddPOIActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".services.LocationService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activities.UpLoadActivity"></activity>
+        <activity android:name=".activities.UpLoadActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.AddPAActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

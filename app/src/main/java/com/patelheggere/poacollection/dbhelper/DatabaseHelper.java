@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Table Name
-    public static final String TABLE_NAME = "POI";
+    public static final String TABLE_NAME_POI = "POI";
+    public static final String TABLE_NAME_PA = "PA";
 
     // Table columns
     public static final String _ID = "_id";
@@ -35,10 +36,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final int DB_VERSION = 1;
 
     // Creating table query
-    private static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID
+    private static final String CREATE_TABLE_POI = "create table " + TABLE_NAME_POI + "(" + _ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " TEXT , " + CATEGORY + " TEXT , "+ SUB_CAT +" TEXT ,"
             +BUILD_NAME +" TEXT , "+BUILD_NUMBER+" TEXT ,"+NO_OF_FLOOR+" TEXT , "+BRAND+" TEXT , "+LAND_MARK+" TEXT, "
             +STREET+" TEXT , "+LOCALITY+" TEXT , "+PINCODE+" TEXT , "+COMMENT+" TEXT ,"+POI_NUMBER+" TEXT ,"+LAT+" TEXT , "+LON+" TEXT ,"+PHONE+" TEXT ,"+PERSON_NAME+" TEXT ,"+DATE+" );";
+
+    // Creating table query
+    private static final String CREATE_TABLE_PA = "create table " + TABLE_NAME_PA + "(" + _ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME + " TEXT , " + CATEGORY + " TEXT , "+ SUB_CAT +" TEXT ,"
+            +BUILD_NAME +" TEXT , "+BUILD_NUMBER+" TEXT ,"+NO_OF_FLOOR+" TEXT , "+BRAND+" TEXT , "+LAND_MARK+" TEXT, "
+            +STREET+" TEXT , "+LOCALITY+" TEXT , "+PINCODE+" TEXT , "+COMMENT+" TEXT ,"+POI_NUMBER+" TEXT ,"+LAT+" TEXT , "+LON+" TEXT ,"+PHONE+" TEXT ,"+PERSON_NAME+" TEXT ,"+DATE+" );";
+
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -46,12 +54,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_TABLE_POI);
+        db.execSQL(CREATE_TABLE_PA);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_POI);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PA);
         onCreate(db);
     }
 }

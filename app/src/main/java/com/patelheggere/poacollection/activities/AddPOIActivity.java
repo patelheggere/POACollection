@@ -3,8 +3,8 @@ package com.patelheggere.poacollection.activities;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,10 +16,10 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.patelheggere.poacollection.R;
 import com.patelheggere.poacollection.dbhelper.DBManager;
 import com.patelheggere.poacollection.models.CategoryModel;
 import com.patelheggere.poacollection.models.PAModel;
+import com.patelheggere.poacollection.R;
 import com.patelheggere.poacollection.models.POIDetails;
 
 import java.util.ArrayList;
@@ -27,17 +27,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class AddPAActivity extends AppCompatActivity {
+public class AddPOIActivity extends AppCompatActivity {
+
     private double lat, lon;
     private EditText etName, etPOINumber, etSubCat, etBName, etBNumber, etNoOfFloor, etBrand, etLAndMark, etStreet, etLocality, etPinCode, etComment, etLat, etLon;
     private Button mSubmit, mCancel;
-    private Spinner SubCategory;
+    private Spinner  SubCategory;
     private TextView Category;
     private String mName = "";
     private String mMoobile = "";
     private String mUid = "";
     private  boolean flag = false;
-    private PAModel paModel = new PAModel();
+    private  PAModel paModel = new PAModel();
     private DatabaseReference mDBRef;
     private FirebaseAuth mAuth;
     private String mCategoryString;
@@ -54,8 +55,8 @@ public class AddPAActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_pa2);
-        dbManager = new DBManager(AddPAActivity.this);
+        setContentView(R.layout.popupwindowfor_pa);
+        dbManager = new DBManager(AddPOIActivity.this);
         lat = getIntent().getDoubleExtra("lat", 0.0f);
         lon = getIntent().getDoubleExtra("lon", 0.0f);
         //System.out.println("LAtscds:"+lat);
@@ -65,17 +66,17 @@ public class AddPAActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         CategoryModel ob = new CategoryModel();
         ob.setCategory("Amusement Park");
-        // ob.setSubCat(new String[]{"Amusement Arcade", "Amusement Park"});
+       // ob.setSubCat(new String[]{"Amusement Arcade", "Amusement Park"});
         categoryModelList.add(ob);
 
-        sharedPreferences = getSharedPreferences("ADDPA", MODE_PRIVATE);
-       // getCatDeatils2();
+        sharedPreferences = getSharedPreferences("ADDPOI", MODE_PRIVATE);
+        getCatDeatils2();
         initialiseUI();
     }
 
     private void initialiseUI()
     {
-        getSupportActionBar().setTitle("Enter PA Details");
+        getSupportActionBar().setTitle("Enter POI Details");
         Category = findViewById(R.id.category);
         SubCategory = findViewById(R.id.subcat);
         etBName = findViewById(R.id.etBName);
@@ -120,11 +121,6 @@ public class AddPAActivity extends AppCompatActivity {
             etPinCode.setText(pincode);
         }
 
-        /*if(lat!=0 && lon!=0)
-        {
-            getAddress(lat, lon);
-        }*/
-
 
 
         final List<String> catList = new ArrayList<>();
@@ -156,6 +152,7 @@ public class AddPAActivity extends AppCompatActivity {
                     // Log.d("", "getCatDeatils2:subcat: "+categoryModelList.get(i).getSubCat().get(j));
                 }
             }
+
         }
         subCategoryAd = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, subCatList);
         subCategoryAd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -178,7 +175,7 @@ public class AddPAActivity extends AppCompatActivity {
                         {
                             if(categoryModelList.get(k).getSubCat().get(m).equalsIgnoreCase(mSubCategoryString))
                             {
-                                mCategoryString = categoryModelList.get(k).getCategory();
+                               mCategoryString = categoryModelList.get(k).getCategory();
                             }
                         }
                     }
@@ -198,9 +195,9 @@ public class AddPAActivity extends AppCompatActivity {
 
 
 
-        // ArrayAdapter<String> Cate = ArrayAdapter.createFromResource(this)
+       // ArrayAdapter<String> Cate = ArrayAdapter.createFromResource(this)
         ArrayAdapter<String> CategoryAdapter = new ArrayAdapter<String>( this, android.R.layout.simple_spinner_item, catList);
-        // ArrayAdapter<CharSequence> CategoryAdapter = ArrayAdapter.createFromResource(this, R.array.array_cat, android.R.layout.simple_spinner_item);
+       // ArrayAdapter<CharSequence> CategoryAdapter = ArrayAdapter.createFromResource(this, R.array.array_cat, android.R.layout.simple_spinner_item);
         CategoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Applying the adapter to our spinner
         /*Category.setAdapter(CategoryAdapter);
@@ -1135,7 +1132,7 @@ public class AddPAActivity extends AppCompatActivity {
         ob.setLocality(etLocality.getText().toString());
         ob.setPincode(etPinCode.getText().toString());
         ob.setComment(etComment.getText().toString());
-        // ob.setmLonggitude();
+       // ob.setmLonggitude();
         ob.setmLattitude(""+String.valueOf(lat));
         ob.setmLonggitude(""+lon);
         ob.setmPOINumber(etPOINumber.getText().toString());
@@ -1151,7 +1148,7 @@ public class AddPAActivity extends AppCompatActivity {
         editor.commit();
 
         dbManager.open();
-        dbManager.insert(ob, 2);
+        dbManager.insert(ob, 1);
         dbManager.close();
         /*
         if(!etLocality.getText().toString().equals(""))
@@ -1539,7 +1536,7 @@ public class AddPAActivity extends AppCompatActivity {
 //subList37.add("Football");
         Ob37.setSubCat(subList37);
         categoryModelList.add(Ob37);
-        CategoryModel Ob38 = new CategoryModel();
+                CategoryModel Ob38 = new CategoryModel();
         Ob38.setCategory("Theater, Music And Culture");
         List<String> subList38 = new ArrayList<>();
         subList38.add("Theater, Music And Culture ");
@@ -1896,7 +1893,7 @@ public class AddPAActivity extends AppCompatActivity {
         subList69.add("Customer Service ");
         subList69.add("Customer Care Service Center ");
         subList69.add("Dry-Cleaning And Laundry");
-        subList69.add("Electrical Services ");
+                subList69.add("Electrical Services ");
         subList69.add("Emission Testing ");
         subList69.add("Engineering And Scientific Services ");
         subList69.add("(Entertainment And Recreation ");
@@ -1923,7 +1920,7 @@ public class AddPAActivity extends AppCompatActivity {
         subList69.add("Real Estate Services ");
         subList69.add("Rental And Leasing");
         subList69.add("Repair And Maintenance Services");
-        subList69.add("Repair Service ");
+                subList69.add("Repair Service ");
         subList69.add("Modeling Agencies");
         subList69.add("Road Assistance");
         subList69.add("Specialty Trend Contractors");

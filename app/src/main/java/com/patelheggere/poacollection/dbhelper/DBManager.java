@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.patelheggere.poacollection.models.POIDetails;
 
@@ -29,7 +30,7 @@ public class DBManager {
         dbHelper.close();
     }
 
-    public void insert(POIDetails object) {
+    public void insert(POIDetails object, int type) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.NAME, object.getName());
         contentValue.put(DatabaseHelper.CATEGORY, object.getCategory());
@@ -49,15 +50,31 @@ public class DBManager {
         contentValue.put(DatabaseHelper.PERSON_NAME, object.getmPersonName());
         contentValue.put(DatabaseHelper.PHONE, object.getmPhoneNumberr());
         contentValue.put(DatabaseHelper.DATE, object.getmDate());
-        System.out.println("Inserted:"+database.insert(DatabaseHelper.TABLE_NAME, null, contentValue));
+        if(type==1) {
+            System.out.println("Inserted:" + database.insert(DatabaseHelper.TABLE_NAME_POI, null, contentValue));
+        }
+        else if(type==2)
+        {
+            System.out.println("Inserted:" + database.insert(DatabaseHelper.TABLE_NAME_PA, null, contentValue));
+        }
     }
 
-    public Cursor fetch() {
+    public Cursor fetch(int type) {
         String[] columns = new String[] { DatabaseHelper._ID,  DatabaseHelper.NAME };
-        Cursor cursor;// = database.query(DatabaseHelper.TABLE_NAME, columns, null, null, null, null, null);
-        cursor = database.rawQuery("SELECT * FROM "+DatabaseHelper.TABLE_NAME, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
+        Cursor cursor = null;// = database.query(DatabaseHelper.TABLE_NAME, columns, null, null, null, null, null);
+        try {
+            if(type==1) {
+                cursor = database.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_NAME_POI, null);
+            }
+            else if (type==2)
+            {
+                cursor = database.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_NAME_PA, null);
+            }
+            if (cursor != null) {
+                cursor.moveToFirst();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return cursor;
     }
@@ -70,7 +87,16 @@ public class DBManager {
         return i;
     }*/
 
-    public void delete(long _id) {
-        database.delete(DatabaseHelper.TABLE_NAME, DatabaseHelper._ID + "=" + _id, null);
+    public void delete(long _id, int type) {
+        Log.d("", "delete: "+_id);
+        if(type==1) {
+            int val = database.delete(DatabaseHelper.TABLE_NAME_POI, DatabaseHelper._ID + "=" + _id, null);
+            Log.d("", "delete: " + val);
+        }
+        else if(type==2)
+        {
+            int val = database.delete(DatabaseHelper.TABLE_NAME_PA, DatabaseHelper._ID + "=" + _id, null);
+            Log.d("", "delete: " + val);
+        }
     }
 }

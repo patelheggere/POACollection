@@ -1,25 +1,36 @@
 package com.patelheggere.poacollection.activities;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,20 +44,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.patelheggere.poacollection.dbhelper.DBManager;
 import com.patelheggere.poacollection.dbhelper.DatabaseHelper;
 import com.patelheggere.poacollection.models.LocationTrack;
-import com.patelheggere.poacollection.models.PAModel;
 import com.patelheggere.poacollection.models.POIDetails;
 import com.patelheggere.poacollection.services.LocationService;
 import com.patelheggere.poacollection.R;
@@ -57,7 +66,10 @@ public class MapLocationActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraIdleListener,
+        GoogleMap.OnMapLoadedCallback,
+        GoogleMap.OnCameraMoveListener,
+        GoogleMap.OnCameraMoveStartedListener, GoogleMap.OnCameraChangeListener, GoogleMap.OnCameraMoveCanceledListener, GoogleMap.OnMapLongClickListener {
 
     GoogleMap mGoogleMap;
     SupportMapFragment mapFrag;
@@ -78,10 +90,15 @@ public class MapLocationActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseReference;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private Button uploadBtn;
+    private Button uploadBtn, btnPOI;
 
     private DBManager dbManager;
     private Cursor mCursor;
+    private ImageView imageViewCurrLocation;
+    private  ConstraintLayout myContainer;
+    private int type = 1;
+    private SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -98,8 +115,11 @@ public class MapLocationActivity extends AppCompatActivity
         signOut();
         cancelbtn();
         submitbtn();
+        myContainer = findViewById(R.id.root_view);
         dbManager = new DBManager(MapLocationActivity.this);
         dbManager.open();
+        imageViewCurrLocation = findViewById(R.id.iv_curr);
+        btnPOI = findViewById(R.id.btnAddPOI);
 
         getSupportActionBar().setTitle("My Location");
         mapFrag =  (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
@@ -108,12 +128,34 @@ public class MapLocationActivity extends AppCompatActivity
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MapLocationActivity.this, UpLoadActivity.class));
+               Intent intent =  new Intent(MapLocationActivity.this, UpLoadActivity.class);
+               intent.putExtra("TYPE", type);
+                startActivity(intent);
             }
         });
 
+        btnPOI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapLocationActivity.this, AddPOIActivity.class);
+                intent.putExtra("lat", lat);
+                intent.putExtra("lon", lon);
+                intent.putExtra("name", mName);
+                intent.putExtra("mobile", mMoobile);
+                intent.putExtra("uid", mUid);
+                startActivity(intent);
+            }
+        });
+
+        btnSignOut.setText("POI click here to chnage");
+        btnPOI.setClickable(true);
+        btnPOI.setEnabled(true);
+
+        btnAddPA.setEnabled(false);
+        btnAddPA.setClickable(false);
+        type = 1;
         LoadPOACollections();
-        //startService(new Intent(MapLocationActivity.this, LocationService.class));
+        sharedPreferences = getSharedPreferences("TRACKING", MODE_PRIVATE);
     }
 
     @Override
@@ -144,6 +186,8 @@ public class MapLocationActivity extends AppCompatActivity
               // mPopupWindow.isShowing();
             }
         });
+
+
     }
 
     private void cancelbtn()
@@ -165,11 +209,53 @@ public class MapLocationActivity extends AppCompatActivity
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(MapLocationActivity.this, PhoneAuthActivity.class));
-                finish();
+                if(btnSignOut.getText().toString().contains("POI"))
+                {
+                    btnSignOut.setText("PA click here to chnage");
+                    type=2;
+                    btnPOI.setClickable(false);
+                    btnPOI.setEnabled(false);
+
+                    btnAddPA.setEnabled(true);
+                    btnAddPA.setClickable(true);
+                    mGoogleMap.clear();
+
+                    LoadPOACollections();
+                }
+                else if(btnSignOut.getText().toString().contains("PA"))
+                {
+                    btnSignOut.setText("POI click here to chnage");
+                    btnPOI.setClickable(true);
+                    btnPOI.setEnabled(true);
+
+                    btnAddPA.setEnabled(false);
+                    btnAddPA.setClickable(false);
+                    type = 1;
+                    mGoogleMap.clear();
+
+                    LoadPOACollections();
+                }
+                //mAuth.signOut();
+                //startActivity(new Intent(MapLocationActivity.this, PhoneAuthActivity.class));
+                //finish();
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopService(new Intent(MapLocationActivity.this, LocationService.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        boolean land = sharedPreferences.getBoolean("TRACKING_ENABLE", false);
+        if(land)
+        {
+            startService(new Intent(MapLocationActivity.this, LocationService.class));
+        }
     }
 
     private void submitbtn()
@@ -181,10 +267,7 @@ public class MapLocationActivity extends AppCompatActivity
     public void onPause() {
         super.onPause();
 
-        //stop location updates when Activity is no longer active
         if (mGoogleApiClient != null) {
-
-
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }
@@ -193,7 +276,21 @@ public class MapLocationActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap)
     {
         mGoogleMap=googleMap;
+        mGoogleMap.setOnMarkerClickListener(this);
+        mGoogleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                Log.d(TAG, "onCameraChange: cam:"+cameraPosition.target.latitude);
+                Log.d(TAG, "onCameraChange: "+cameraPosition.target.longitude);
+            }
+        });
+
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mGoogleMap.setOnCameraIdleListener(this);
+        mGoogleMap.setOnCameraMoveStartedListener(this);
+        mGoogleMap.setOnCameraMoveListener(this);
+        mGoogleMap.setOnCameraMoveCanceledListener(this);
+        mGoogleMap.setOnMapLongClickListener(this);
 
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -215,6 +312,14 @@ public class MapLocationActivity extends AppCompatActivity
             mGoogleMap.setMyLocationEnabled(true);
         }
     }
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -234,17 +339,18 @@ public class MapLocationActivity extends AppCompatActivity
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
-
     }
 
     private void LoadPOACollections()
     {
-        mCursor = dbManager.fetch();
+        Log.d(TAG, "LoadPOACollections type:  "+type);
+        mCursor = dbManager.fetch(type);
         POIDetails ob = new POIDetails();
         if(mCursor.getCount()>0) {
             if (mCursor.moveToFirst()) {
                 do {
                     try {
+                        Log.d(TAG, "LoadPOACollections: "+mCursor.getInt(mCursor.getColumnIndex(DatabaseHelper._ID)));
                         LatLng latLng = new LatLng(Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LAT))), Double.parseDouble(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LON))));
                         MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions.position(latLng);
@@ -252,10 +358,10 @@ public class MapLocationActivity extends AppCompatActivity
                             markerOptions.title(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.BUILD_NAME)));
                         else
                             markerOptions.title("No Name");
-                        markerOptions.snippet(markerOptions.getPosition().toString());
+                        //markerOptions.snippet(markerOptions.getPosition().toString());
                         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                         markerOptions.draggable(false);
-                        mGoogleMap.addMarker(markerOptions);
+                        mGoogleMap.addMarker(markerOptions).setTag(mCursor.getInt(mCursor.getColumnIndex(DatabaseHelper._ID)));
                     }catch (Exception e)
                     {
                         //LoadPOACollections();
@@ -344,8 +450,8 @@ public class MapLocationActivity extends AppCompatActivity
             mCurrLocationMarker.remove();
         }
         //Place current location marker
-        lat = location.getLatitude();
-        lon = location.getLongitude();
+       // lat = location.getLatitude();
+       // lon = location.getLongitude();
         LocationTrack ob = new LocationTrack();
         ob.setmLatitude(lat);
         ob.setmLongitude(lon);
@@ -362,7 +468,7 @@ public class MapLocationActivity extends AppCompatActivity
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         markerOptions.draggable(true);
         //textView.setText(markerOptions.getPosition().toString());
-        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+        //mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
 
         //move map camera
         float zoomLevel = mGoogleMap.getMaxZoomLevel(); //20.0f; //This goes up to 21
@@ -472,5 +578,133 @@ public class MapLocationActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+       /* int mapHeight = myContainer.getHeight();
+        int mapWidth = myContainer.getWidth();
+        Projection projection = mGoogleMap.getProjection();
+        LatLng markerPosition = marker.getPosition();
+        Point markerPoint = projection.toScreenLocation(markerPosition);
+        Point targetPoint = new Point(markerPoint.x, markerPoint.y - myContainer.getHeight() / 2);
+        LatLng targetPosition = projection.fromScreenLocation(targetPoint);
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(targetPosition), 1000, null);*/
+        showDetailsOfPartner(marker.getTitle(), (int)marker.getTag());
+        return false;
+    }
 
+    private void showDetailsOfPartner(String details, final int id)
+    {
+        Log.d(TAG, "showDetailsOfPartner: "+id);
+        final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View customView = inflater.inflate(R.layout.pop_layout, null, false);
+        LinearLayout constraintLayout = customView.findViewById(R.id.cl_details);
+        mPopupWindow = new PopupWindow(
+                customView,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, true
+        );
+
+        TextView textView = customView.findViewById(R.id.tv_title);
+        textView.setText(details);
+        mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setFocusable(true);
+        // Removes default background.
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            mPopupWindow.setElevation(5.0f);
+        }
+
+       // Animation animation = AnimationUtils.loadAnimation(MapLocationActivity.this, R.anim.zoom_in_one_sec);
+       // constraintLayout.startAnimation(animation);
+
+        Button closeButton =  customView.findViewById(R.id.iv_close);
+        Button delete = customView.findViewById(R.id.iv_delete);
+        // Set a click listener for the popup window close button
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Dismiss the popup window
+                mPopupWindow.dismiss();
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbManager.delete(id, type);
+                mPopupWindow.dismiss();
+                mGoogleMap.clear();
+                LoadPOACollections();
+            }
+        });
+        mPopupWindow.showAtLocation(myContainer, Gravity.CENTER, 0, 0);
+    }
+
+    @Override
+    public void onCameraChange(CameraPosition cameraPosition) {
+    }
+
+    @Override
+    public void onCameraIdle() {
+        LatLng latLng = mGoogleMap.getCameraPosition().target;
+        Log.d(TAG, "onCameraIdle: "+latLng.latitude +" "+latLng.longitude);
+        lat = latLng.latitude;
+        lon = latLng.longitude;
+    }
+
+    @Override
+    public void onCameraMoveCanceled() {
+
+    }
+
+    @Override
+    public void onCameraMove() {
+
+    }
+
+    @Override
+    public void onCameraMoveStarted(int i) {
+
+    }
+
+    @Override
+    public void onMapLoaded() {
+
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        imageViewCurrLocation.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.navigation, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.updload:
+                boolean land = sharedPreferences.getBoolean("TRACKING_ENABLE", false);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if(land)
+                {
+                    editor.putBoolean("TRACKING_ENABLE", false);
+                    editor.commit();
+                    stopService(new Intent(MapLocationActivity.this, LocationService.class));
+                }
+                else {
+                    editor.putBoolean("TRACKING_ENABLE", true);
+                    editor.commit();
+                    startService(new Intent(MapLocationActivity.this, LocationService.class));
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
