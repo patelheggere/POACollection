@@ -26,9 +26,12 @@ public class PAModel {
     private Long mDate;
     private String userPhone;
     private String userName;
+    private String adds;
     public PAModel()
     {
     }
+
+
 
     public String getmPlaceName() {
         return mPlaceName;
@@ -196,5 +199,13 @@ public class PAModel {
 
     public void setmLocality(String mLocality) {
         this.mLocality = mLocality;
+    }
+
+    public String getAdds() {
+        return adds;
+    }
+
+    public void setAdds(String adds) {
+        this.adds = adds;
     }
 }

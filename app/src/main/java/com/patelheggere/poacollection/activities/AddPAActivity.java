@@ -120,10 +120,10 @@ public class AddPAActivity extends AppCompatActivity {
             etPinCode.setText(pincode);
         }
 
-        /*if(lat!=0 && lon!=0)
+        if(lat!=0 && lon!=0)
         {
             getAddress(lat, lon);
-        }*/
+        }
 
 
 
@@ -1994,11 +1994,7 @@ public class AddPAActivity extends AppCompatActivity {
             if (addresses.isEmpty()) {
             } else {
                 if (addresses.size() > 0) {
-                    etPinCode.setText(addresses.get(0).getPostalCode());
-                    etStreet.setText(addresses.get(0).getSubLocality());
-                    etLocality.setText(addresses.get(0).getLocality());
-                    etPOINumber.setText(addresses.get(0).getPhone());
-                    etName.setText(addresses.get(0).getFeatureName());
+                    paModel.setAdds(addresses.get(0).getAddressLine(0));
                 }
             }
         } catch (Exception e) {

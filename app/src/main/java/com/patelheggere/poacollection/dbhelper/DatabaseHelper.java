@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String PHONE = "phone";
     public static final String PERSON_NAME = "person_name";
     public static final String DATE = "date";
+
     // Database Information
     static final String DB_NAME = "POI3.DB";
 

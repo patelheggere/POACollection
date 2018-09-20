@@ -204,7 +204,7 @@ public class MapLocationActivity extends AppCompatActivity
 
     private void signOut()
     {
-        stopService(new Intent(MapLocationActivity.this, LocationService.class));
+        //stopService(new Intent(MapLocationActivity.this, LocationService.class));
         btnSignOut = findViewById(R.id.btnSignout);
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
