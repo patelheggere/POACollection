@@ -691,7 +691,7 @@ public class AddTreeActivity extends AppCompatActivity {
                 progressDialog.setTitle("Uploading...");
                 progressDialog.show();
 
-                final StorageReference ref = storageReference.child("images").child("profile").child(mMoobile.trim()).child(UUID.randomUUID().toString());
+                final StorageReference ref = storageReference.child("tree").child("CensusImages").child(mMoobile.trim()).child(UUID.randomUUID().toString());
                 //UploadTask uploadTask =
                 ref.putFile(filePath)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
