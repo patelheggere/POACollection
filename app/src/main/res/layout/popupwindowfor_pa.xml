@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,7 +17,7 @@
         android:id="@+id/tvPOINumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="POI NUMBER"
+        android:text="NUMBER"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPOINumber" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:layout_width="2dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -52,7 +52,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:inputType="number"
-        android:hint="POI Number"
+        android:hint="Number"
         android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/gd1"
@@ -148,7 +148,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:hint="Number of Floor"
-        android:inputType="textCapWords"
+        android:inputType="number"
         android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -278,7 +278,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:hint="Land MArk"
+        android:hint="Land Mark"
         android:inputType="textCapWords"
         android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
@@ -443,5 +443,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSubmit" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

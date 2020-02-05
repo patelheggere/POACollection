@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pradeep POA Collector</string>
+    <string name="app_name">Tree Census Tool</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDB37y9E0562FMHknImvSmrPLpdx0yrAtU</string>
     <string name="et_houseno">Enter Place Name</string>
     <string name="et_housename">Enter House Name</string>
@@ -8,13 +8,33 @@
     <string name="et_subl1">Enter Sub Locality1</string>
     <string name="et_subl2">Enter Sub Locality2</string>
     <string name="et_subl3">Enter Sub Locality3</string>
-    <string name="et_pin">Enter PIN Code</string>
+    <string name="et_pin">PIN Code</string>
     <string name="sign_out">Sign Out</string>
     <string name="hint_phone_number">Enter Phone Number</string>
     <string name="hint_verification_code">Verification Code</string>
     <string name="start_phone_auth">Send OTP</string>
     <string name="verify_phone_auth">Verify OTP</string>
     <string name="resend_phone_auth">Resend OTP</string>
+    <string name="signup">Not Registered? click here</string>
+    <string name="sigin">have you registered? click here</string>
+    <string name="phone">Enter 10 digit Phone No.</string>
+    <string name="enter_pwd">Enter OTP</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="login">Verify</string>
+    <string name="name">Name</string>
+    <string name="uid">Aadhar No.</string>
+    <string name="register">Register</string>
+
+    <string name="email">Email</string>
+    <string name="resendOTP">resend otp</string>
+    <string name="tree_name">Tree/ Plant Name</string>
+    <string name="tree_height">Tree/Plant Height</string>
+    <string name="tree_age">Tree/Plant Age</string>
+    <string name="tree_maintained">Maintained By</string>
+    <string name="lat">Latitude</string>
+    <string name="lon">Longitude</string>
+    <string name="welcome">Welcome to Tree Census</string>
+
     <string-array name="array_cat">
         <item>Select Category</item>
         <item>Bus Station</item>

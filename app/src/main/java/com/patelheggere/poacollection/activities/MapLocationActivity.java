@@ -5,16 +5,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,15 +36,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.patelheggere.poacollection.activities.addtree.AddTreeActivity;
+import com.patelheggere.poacollection.activities.newlogin.NewLoginActivity;
 import com.patelheggere.poacollection.dbhelper.DBManager;
 import com.patelheggere.poacollection.dbhelper.DatabaseHelper;
 import com.patelheggere.poacollection.models.LocationTrack;
-import com.patelheggere.poacollection.models.PAModel;
 import com.patelheggere.poacollection.models.POIDetails;
 import com.patelheggere.poacollection.services.LocationService;
 import com.patelheggere.poacollection.R;
@@ -132,7 +128,7 @@ public class MapLocationActivity extends AppCompatActivity
         btnAddPA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MapLocationActivity.this, AddPAActivity.class);
+                Intent intent = new Intent(MapLocationActivity.this, AddTreeActivity.class);
                 intent.putExtra("lat", lat);
                 intent.putExtra("lon", lon);
                 intent.putExtra("name", mName);
@@ -166,7 +162,7 @@ public class MapLocationActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                startActivity(new Intent(MapLocationActivity.this, PhoneAuthActivity.class));
+                startActivity(new Intent(MapLocationActivity.this, NewLoginActivity.class));
                 finish();
             }
         });
@@ -183,8 +179,6 @@ public class MapLocationActivity extends AppCompatActivity
 
         //stop location updates when Activity is no longer active
         if (mGoogleApiClient != null) {
-
-
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }

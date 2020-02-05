@@ -1,7 +1,7 @@
 package com.patelheggere.poacollection.activities;
 
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +15,6 @@ import com.patelheggere.poacollection.R;
 import com.patelheggere.poacollection.dbhelper.DBManager;
 import com.patelheggere.poacollection.dbhelper.DatabaseHelper;
 import com.patelheggere.poacollection.models.POIDetails;
-
-import java.util.Date;
-
-import static com.patelheggere.poacollection.dbhelper.DatabaseHelper.LAT;
-import static com.patelheggere.poacollection.dbhelper.DatabaseHelper._ID;
 
 public class UpLoadActivity extends AppCompatActivity {
 
@@ -41,7 +36,7 @@ public class UpLoadActivity extends AppCompatActivity {
         mCursor = dbManager.fetch();
         nofItems=mCursor.getCount();
         mAuth = FirebaseAuth.getInstance();
-        mTvCount.setText("No of POI Details to upload:"+mCursor.getCount());
+        mTvCount.setText("No of  Details to upload:"+mCursor.getCount());
         if(nofItems>0)
         {
             btnUpload.setEnabled(true);
@@ -55,7 +50,7 @@ public class UpLoadActivity extends AppCompatActivity {
                 mCursor = dbManager.fetch();
                 POIDetails ob = new POIDetails();
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                mDBRef = firebaseDatabase.getReference().child("POICollections").child(mAuth.getCurrentUser().getPhoneNumber());
+                mDBRef = firebaseDatabase.getReference().child("LandPoint").child(mAuth.getCurrentUser().getPhoneNumber());
                 if (mCursor.moveToFirst()){
                     do{
                         ob.setmPersonName(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.PERSON_NAME)));
@@ -79,7 +74,7 @@ public class UpLoadActivity extends AppCompatActivity {
                         mDBRef.push().setValue(ob);
                         dbManager.delete(mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper._ID)));
                         nofItems = nofItems-1;
-                        mTvCount.setText("No of POI Details to upload:"+nofItems);
+                        mTvCount.setText("No of Details to upload:"+nofItems);
                         // do what ever you want here
                     }while(mCursor.moveToNext());
                     Toast.makeText(UpLoadActivity.this, "Uploaded Successfully to server", Toast.LENGTH_LONG).show();
